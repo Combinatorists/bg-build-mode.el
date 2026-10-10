@@ -182,6 +182,7 @@ user."
 
 (add-to-list 'auto-mode-alist '("\\.bgb$" . emacs-lisp-mode))
 
+;;;###autoload
 (defun bg-build-add-project (&optional file dont-save)
   "Adds a project file to bg-build minor mode.  This basically
 reads and evaluates the first Emacs Lisp expression from specified file.
@@ -206,8 +207,8 @@ The expression should evaluate to a bg-build project object."
                    (goto-char (point-min))
                    (eval `(cl-labels
                               ((bg-build
-                                (&rest args)
-                                (apply (function bg-build-prj) ,file args)))
+                                 (&rest args)
+                                 (apply (function bg-build-prj) ,file args)))
                             ,(read (current-buffer)))))))
       (bg-build-set-projects
        (bg-build-replace-in-assoc bg-build-projects file data)
@@ -494,6 +495,7 @@ The expression should evaluate to a bg-build project object."
         (bg-build-cons-once project bg-build-build-queue))
   (bg-build-interrupt-build project))
 
+;;;###autoload
 (defun bg-build-switch-to-messages (&optional other-window)
   "Switches to the latest finished build buffer with messages."
   (interactive "P")
@@ -509,6 +511,7 @@ The expression should evaluate to a bg-build project object."
             (switch-to-buffer buffer)))
       (message "No messages"))))
 
+;;;###autoload
 (defun bg-build-switch-to-live (&optional other-window)
   "Switches to the latest live build buffer."
   (interactive "P")
@@ -519,6 +522,7 @@ The expression should evaluate to a bg-build project object."
           (switch-to-buffer buffer)))
     (message "No live builds")))
 
+;;;###autoload
 (defun bg-build-switch-to-finished (&optional other-window)
   "Switches to the latest finished build buffer."
   (interactive "P")
@@ -601,6 +605,7 @@ The expression should evaluate to a bg-build project object."
   "Major mode for browsing bg-build related data."
   :group 'bg-build-status)
 
+;;;###autoload
 (defun bg-build-status ()
   "Show a buffer with bg-build mode related data."
   (interactive)
@@ -680,6 +685,7 @@ The expression should evaluate to a bg-build project object."
                (< idx (length bg-build-projects)))
       (nth idx bg-build-projects))))
 
+;;;###autoload
 (defun bg-build-status-rem-project ()
   "Removes the project from bg-build."
   (interactive)
@@ -689,6 +695,7 @@ The expression should evaluate to a bg-build project object."
        (bg-build-remove-from-assoc bg-build-projects (car project)))
       (bg-build-status-update))))
 
+;;;###autoload
 (defun bg-build-status-visit-project-file ()
   "Visits the project file of the project."
   (interactive)
@@ -696,6 +703,7 @@ The expression should evaluate to a bg-build project object."
     (when project
       (find-file (car project)))))
 
+;;;###autoload
 (defun bg-build-status-visit-finished-build ()
   "Visits the buffer of the finished build of the project."
   (interactive)
@@ -706,6 +714,7 @@ The expression should evaluate to a bg-build project object."
             (switch-to-buffer (cdr build))
           (message "That project has no finished builds."))))))
 
+;;;###autoload
 (defun bg-build-status-visit-live-build ()
   "Visits the buffer of the live build of the project."
   (interactive)
@@ -716,6 +725,7 @@ The expression should evaluate to a bg-build project object."
             (switch-to-buffer (process-buffer (cdr build)))
           (message "That project has no live builds."))))))
 
+;;;###autoload
 (defun bg-build-status-start-build ()
   "Starts a new build of the project."
   (interactive)
@@ -747,6 +757,7 @@ The expression should evaluate to a bg-build project object."
     (when cons
       (setcdr cons bg-build-mode-map))))
 
+;;;###autoload
 (define-minor-mode bg-build-mode
   "Minor mode for performing builds on the background.
 

@@ -37,6 +37,7 @@ on nil."
     (lambda (&rest _)
       value)))
 
+;;;###autoload
 (defun bg-build-kill-current-buffer ()
   "Kills the current buffer."
   (interactive)
